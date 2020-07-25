@@ -1,4 +1,5 @@
 ﻿using ERP.Healthcare.Doctors;
+using ERP.Healthcare.Permissions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Linq;
 using Volo.Abp.Threading;
 
 namespace ERP.Healthcare
@@ -24,6 +26,7 @@ namespace ERP.Healthcare
         private readonly IRepository<City, int> _cityRepository;
         private readonly IRepository<DoctorSpecialty, int> _doctorSpecialestRepository;
         private readonly IRepository<DoctorTitle, int> _doctorTitleRepository;
+        private readonly IAsyncQueryableExecuter _asyncExecuter;
 
         public DoctorAppService(IRepository<Doctor, int> doctorRepository
             , IRepository<Country, int> countryRepository
@@ -31,6 +34,7 @@ namespace ERP.Healthcare
             , IRepository<City, int> cityRepository
             , IRepository<DoctorSpecialty, int> doctorSpecialestRepository
             , IRepository<DoctorTitle, int> doctorTitleRepository
+            , IAsyncQueryableExecuter asyncExecuter
             )
             : base(doctorRepository)
         {
@@ -39,6 +43,13 @@ namespace ERP.Healthcare
             _cityRepository = cityRepository;
             _doctorSpecialestRepository = doctorSpecialestRepository;
             _doctorTitleRepository = doctorTitleRepository;
+            _asyncExecuter = asyncExecuter;
+
+            GetPolicyName = HealthcarePermissions.Doctors.Default;
+            GetListPolicyName = HealthcarePermissions.Doctors.Default;
+            CreatePolicyName = HealthcarePermissions.Doctors.Create;
+            UpdatePolicyName = HealthcarePermissions.Doctors.Edit;
+            DeletePolicyName = HealthcarePermissions.Doctors.Delete;
         }
 
         protected override IQueryable<Doctor> CreateFilteredQuery(PagedAndSortedResultRequestDto input)
@@ -55,8 +66,11 @@ namespace ERP.Healthcare
             
             if (countryId > 0)
             {
-                stateList = await _stateRepository.GetListAsync();
-                cityList = await _cityRepository.GetListAsync();
+                var stateQuery = _stateRepository.Where(s => s.Country.Id == countryId);
+                stateList = await _asyncExecuter.ToListAsync(stateQuery);
+
+                var cityQuery = _cityRepository.Where(c => c.State.Id == stateId);
+                cityList = await _asyncExecuter.ToListAsync(cityQuery);
             }
 
             var doctorSpecialestList = await _doctorSpecialestRepository.GetListAsync();

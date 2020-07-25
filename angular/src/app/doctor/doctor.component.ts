@@ -4,6 +4,8 @@ import { DoctorDto, GenderTypeEnum, LockupsDto, DoctorSpecialtyDto, DoctorTitleD
 import { DoctorService } from './services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
@@ -30,7 +32,11 @@ export class DoctorComponent implements OnInit {
     (gender) => typeof this.genderType[gender] === 'number'
   );
 
-  constructor(public readonly list: ListService, private doctorService: DoctorService, private formBuilder: FormBuilder) { }
+  constructor(public readonly list: ListService,
+    private doctorService: DoctorService,
+    private formBuilder: FormBuilder,
+    private confirmation: ConfirmationService
+  ) { }
 
   ngOnInit(): void {
     const doctorStreamCreator = (query) => this.doctorService.getListByInput(query);
@@ -42,6 +48,14 @@ export class DoctorComponent implements OnInit {
     this.doctorService.getLockupsByCountryIdAndStateId().subscribe((lockup) => {
      this.lockups = lockup;
      console.log(this.lockups);
+    });
+  }
+
+  delete(id: number) {
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
+      if (status === Confirmation.Status.confirm) {
+        this.doctorService.deleteById(id).subscribe(() => this.list.get());
+      }
     });
   }
 

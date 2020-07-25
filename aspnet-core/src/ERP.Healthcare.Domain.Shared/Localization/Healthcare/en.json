@@ -26,7 +26,12 @@
     "City": "Apartment Number",
     "Specialty": "Specialty",
     "Title": "Title",
-    "Address": "Address"
+    "Address": "Address",
+    "Permission:Healthcare": "Healthcare Manage",
+    "Permission:Doctors": "doctor Management",
+    "Permission:Doctors.Create": "Creating new doctors",
+    "Permission:Doctors.Edit": "Editing the doctors",
+    "Permission:Doctors.Delete": "Deleting the doctors"
 
   }
 }

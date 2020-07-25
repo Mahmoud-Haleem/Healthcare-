@@ -29,6 +29,7 @@ function configureRoutes(routes: RoutesService) {
         order: 2,
         parentName: '::Menu:DoctorManagement',
         layout: eLayoutType.application,
+        requiredPolicy: 'Healthcare.Doctors',
       }
     ]);
   };
