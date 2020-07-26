@@ -14,5 +14,13 @@
             public const string Edit = Default + ".Edit";
             public const string Delete = Default + ".Delete";
         }
+
+        public static class Patients
+        {
+            public const string Default = GroupName + ".Patients";
+            public const string Create = Default + ".Create";
+            public const string Edit = Default + ".Edit";
+            public const string Delete = Default + ".Delete";
+        }
 }
 }

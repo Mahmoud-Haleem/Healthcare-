@@ -70,7 +70,7 @@ namespace ERP.Healthcare
                 stateList = await _asyncExecuter.ToListAsync(stateQuery);
 
                 var cityQuery = _cityRepository.Where(c => c.State.Id == stateId);
-                cityList = await _asyncExecuter.ToListAsync(cityQuery);
+                cityList = await AsyncExecuter.ToListAsync(cityQuery);
             }
 
             var doctorSpecialestList = await _doctorSpecialestRepository.GetListAsync();

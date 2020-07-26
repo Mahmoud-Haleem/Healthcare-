@@ -11,12 +11,17 @@ namespace ERP.Healthcare.Permissions
             //Define your own permissions here. Example:
             //myGroup.AddPermission(HealthcarePermissions.MyPermission1, L("Permission:MyPermission1"));
 
-            var bookStoreGroup = context.AddGroup(HealthcarePermissions.GroupName, L("Permission:Healthcare"));
+            var healthcareGroup = context.AddGroup(HealthcarePermissions.GroupName, L("Permission:Healthcare"));
 
-            var booksPermission = bookStoreGroup.AddPermission(HealthcarePermissions.Doctors.Default, L("Permission:Doctors"));
-            booksPermission.AddChild(HealthcarePermissions.Doctors.Create, L("Permission:Doctors.Create"));
-            booksPermission.AddChild(HealthcarePermissions.Doctors.Edit, L("Permission:Doctors.Edit"));
-            booksPermission.AddChild(HealthcarePermissions.Doctors.Delete, L("Permission:Doctors.Delete"));
+            var doctorsPermission = healthcareGroup.AddPermission(HealthcarePermissions.Doctors.Default, L("Permission:Doctors"));
+            doctorsPermission.AddChild(HealthcarePermissions.Doctors.Create, L("Permission:Doctors.Create"));
+            doctorsPermission.AddChild(HealthcarePermissions.Doctors.Edit, L("Permission:Doctors.Edit"));
+            doctorsPermission.AddChild(HealthcarePermissions.Doctors.Delete, L("Permission:Doctors.Delete"));
+
+            var patientPermission = healthcareGroup.AddPermission(HealthcarePermissions.Patients.Default, L("Permission:Patients"));
+            patientPermission.AddChild(HealthcarePermissions.Patients.Create, L("Permission:Patients.Create"));
+            patientPermission.AddChild(HealthcarePermissions.Patients.Edit, L("Permission:Patients.Edit"));
+            patientPermission.AddChild(HealthcarePermissions.Patients.Delete, L("Permission:Patients.Delete"));
         }
 
         private static LocalizableString L(string name)

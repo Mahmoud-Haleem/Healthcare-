@@ -6,6 +6,7 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.Identity;
 using Volo.Abp.Users.EntityFrameworkCore;
 using ERP.Healthcare.Doctors;
+using ERP.Healthcare.Patients;
 
 namespace ERP.Healthcare.EntityFrameworkCore
 {
@@ -33,6 +34,7 @@ namespace ERP.Healthcare.EntityFrameworkCore
         public DbSet<DoctorShift> DoctorShifts { get; set; }
         public DbSet<DoctorSpecialty> DoctorSpecialties { get; set; }
         public DbSet<DoctorTitle> DoctorTitles { get; set; }
+        public DbSet<Patient> Patients { get; set; }
 
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside HealthcareDbContextModelCreatingExtensions.ConfigureHealthcare

@@ -1,4 +1,5 @@
 ﻿using ERP.Healthcare.Doctors;
+using ERP.Healthcare.Patients;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +15,21 @@ namespace ERP.Healthcare
         private readonly IRepository<DoctorSpecialty, int> _doctorSpecialtyRepository;
         private readonly IRepository<DoctorTitle, int> _doctorTitleRepository;
         private readonly IRepository<Membership, int> _membershipRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly PatientManager _patientManager;
         private readonly IRepository<City, int> _cityRepository;
 
         public DoctorDataSeederContributor(IRepository<DoctorSpecialty, int> doctorSpecialtyRepository
             , IRepository<DoctorTitle, int> doctorTitleRepository
-            , IRepository<Membership, int> membershipRepository)
-        { 
+            , IRepository<Membership, int> membershipRepository
+            , IPatientRepository patientRepository
+            , PatientManager patientManager)
+        {
             _doctorSpecialtyRepository = doctorSpecialtyRepository;
             _doctorTitleRepository = doctorTitleRepository;
             _membershipRepository = membershipRepository;
+            _patientRepository = patientRepository;
+            _patientManager = patientManager;
         }
 
         public async Task SeedAsync(DataSeedContext context)
@@ -46,7 +53,23 @@ namespace ERP.Healthcare
                 await _doctorTitleRepository.InsertAsync(new DoctorTitle { Name = "استشاري" }, autoSave: true);
                 await _doctorTitleRepository.InsertAsync(new DoctorTitle { Name = "أخصائي" }, autoSave: true);
             }
-             
+
+            await _patientRepository.InsertAsync(
+                await _patientManager.CreateAsync(
+                  "George Orwell",
+                  DateTime.Now,
+                  "Orwell produced literary criticism and poetry, "
+              )
+            );
+
+            await _patientRepository.InsertAsync(
+                await _patientManager.CreateAsync(
+                   "Douglas Adams",
+                    new DateTime(1952, 03, 11),
+                    "Douglas Adams was an English author, screenwriter"
+                )
+            );
+
         }
     }
 }

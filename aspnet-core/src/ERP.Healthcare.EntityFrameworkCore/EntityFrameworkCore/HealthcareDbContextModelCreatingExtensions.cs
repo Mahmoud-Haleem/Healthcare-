@@ -1,4 +1,5 @@
 ﻿using ERP.Healthcare.Doctors;
+using ERP.Healthcare.Patients;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -155,6 +156,15 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.ToTable("DoctorTitles", nameof(Doctor));
                 b.ConfigureByConvention();
                 b.Property(p => p.Name).IsRequired().HasMaxLength(100);
+            });
+
+            builder.Entity<Patient>(b =>
+            {
+                b.ToTable("Patient", nameof(Patient));
+                b.ConfigureByConvention();
+                b.Property(p => p.Name).IsRequired().HasMaxLength(PatientConsts.MaxNameLength);
+                b.Property(p => p.ShortDescription).IsRequired().HasMaxLength(PatientConsts.MaxShortDescriptionLength);
+                b.HasIndex(p => p.Name);
             });
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ERP.Healthcare.Doctors;
+using ERP.Healthcare.Patients;
 using Volo.Abp.AutoMapper;
 
 namespace ERP.Healthcare
@@ -30,6 +31,8 @@ namespace ERP.Healthcare
             CreateMap<CreateUpdateAddressDto, Address>();
             CreateMap<CreateUpdateDoctorSpecialtyDto, DoctorSpecialty>();
             CreateMap<CreateUpdateDoctorTitleDto, DoctorTitle>();
+
+            CreateMap<Patient, PatientDto>();
         }
     }
 }
