@@ -18,5 +18,7 @@ namespace ERP.Healthcare.Patients
         Task UpdateAsync(int id, UpdatePatientDto input);
 
         Task DeleteAsync(int id);
+
+        Task<ListResultDto<DoctorLookupDto>> GetDoctorLookupAsync();
     }
 }

@@ -12,66 +12,7 @@ namespace ERP.Healthcare.EntityFrameworkCore
         {
             Check.NotNull(builder, nameof(builder));
 
-            /* Configure your own tables/entities inside here */
-            
-            builder.Entity<State>()
-                .HasOne<Country>(p => p.Country)
-                .WithMany(p=> p.States)
-                .IsRequired();
-
-            builder.Entity<City>()
-                .HasOne(p => p.State)
-                .WithMany(p => p.Cities)
-                .IsRequired();
-
-            builder.Entity<Address>()
-                .HasOne(p => p.City)
-                .WithMany()
-                .HasForeignKey(s => s.CityId)
-                .IsRequired();
-            
-            builder.Entity<Doctor>()
-                .HasOne(p => p.Address)
-                .WithMany()
-                .HasForeignKey(s => s.AddressId)
-                .IsRequired();
-
-            builder.Entity<Doctor>()
-                .HasOne(p => p.DoctorSpecialty)
-                .WithMany()
-                .HasForeignKey(s => s.DoctorSpecialtyId)
-                .IsRequired();
-
-            builder.Entity<Doctor>()
-                .HasOne(p => p.DoctorTitle)
-                .WithMany()
-                .HasForeignKey(s => s.DoctorTitleId)
-                .IsRequired();
-
-            builder.Entity<Membership>()
-               .HasOne(p => p.Address)
-               .WithMany()
-               .IsRequired();
-
-            builder.Entity<DoctorMembership>()
-                .HasOne(p => p.Membership)
-                .WithMany(p => p.DoctorMemberships);
-
-            builder.Entity<DoctorMembership>()
-                .HasOne(p => p.Doctor)
-                .WithMany(p => p.DoctorMemberships)
-                .IsRequired();
-
-            builder.Entity<DoctorMembership>()
-               .HasOne(p => p.DoctorShift)
-               .WithMany()
-               .IsRequired();
-
-            builder.Entity<DoctorService>()
-                .HasOne(p => p.Doctor)
-                .WithMany()
-                .IsRequired();
-
+            /* Configure your own tables/entities inside here */ 
             builder.Entity<Country>(b =>
             {
                 b.ToTable("Countries", "General");
@@ -85,6 +26,8 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.ToTable("States", "General");
                 b.ConfigureByConvention();
                 b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+
+                b.HasOne(p => p.Country).WithMany(p => p.States).IsRequired();
             });
 
             builder.Entity<City>(b =>
@@ -92,6 +35,8 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.ToTable("Cities", "General");
                 b.ConfigureByConvention();
                 b.Property(x => x.Name).IsRequired().HasMaxLength(100); 
+
+                b.HasOne(p => p.State).WithMany(p => p.Cities).IsRequired();
             });
 
             builder.Entity<Address>(b =>
@@ -103,6 +48,8 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.Property(x => x.BuildNumber).IsRequired();
                 b.Property(x => x.ApartmentNumber).IsRequired();
                 b.Property(x => x.Postalcode).IsRequired();
+
+                b.HasOne(p => p.City).WithMany().HasForeignKey(s => s.CityId).IsRequired();
             });
 
             builder.Entity<Doctor>(b =>
@@ -112,6 +59,10 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.Property(x => x.Gender).IsRequired();
                 b.Property(x => x.Description).IsRequired().HasMaxLength(100);
                 b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+
+                b.HasOne(p => p.Address).WithMany().HasForeignKey(s => s.AddressId).IsRequired();
+                b.HasOne(p => p.DoctorSpecialty).WithMany().HasForeignKey(s => s.DoctorSpecialtyId).IsRequired();
+                b.HasOne(p => p.DoctorTitle).WithMany().HasForeignKey(s => s.DoctorTitleId).IsRequired();
             });
 
             builder.Entity<DoctorService>(b =>
@@ -120,12 +71,18 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.ConfigureByConvention();
                 b.Property(p => p.Name).IsRequired().HasMaxLength(100);
                 b.Property(p => p.Price).IsRequired();
+
+                b.HasOne(p => p.Doctor).WithMany().IsRequired();
             });
 
             builder.Entity<DoctorMembership>(b =>
             {
                 b.ToTable("DoctorMemberships", nameof(Doctor));
                 b.ConfigureByConvention();
+
+                b.HasOne(p => p.Membership).WithMany(p => p.DoctorMemberships);
+                b.HasOne(p => p.Doctor).WithMany(p => p.DoctorMemberships).IsRequired();
+                b.HasOne(p => p.DoctorShift).WithMany().IsRequired();
             });
 
             builder.Entity<Membership>(b =>
@@ -133,6 +90,8 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.ToTable("Memberships", nameof(Doctor));
                 b.ConfigureByConvention();
                 b.Property(p => p.Name).IsRequired().HasMaxLength(100);
+
+                b.HasOne(p => p.Address).WithMany().IsRequired();
             });
 
             builder.Entity<DoctorShift>(b =>
@@ -165,6 +124,8 @@ namespace ERP.Healthcare.EntityFrameworkCore
                 b.Property(p => p.Name).IsRequired().HasMaxLength(PatientConsts.MaxNameLength);
                 b.Property(p => p.ShortDescription).IsRequired().HasMaxLength(PatientConsts.MaxShortDescriptionLength);
                 b.HasIndex(p => p.Name);
+
+                b.HasOne<Doctor>().WithMany().HasForeignKey(s => s.DoctorId).IsRequired();
             });
         }
     }

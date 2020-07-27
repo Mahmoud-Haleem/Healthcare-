@@ -30,6 +30,14 @@ function configureRoutes(routes: RoutesService) {
         parentName: '::Menu:DoctorManagement',
         layout: eLayoutType.application,
         requiredPolicy: 'Healthcare.Doctors',
+      },
+      {
+        path: '/patients',
+        name: '::Menu:Patient',
+        iconClass: 'fas fa-user-md',
+        parentName: '::Menu:DoctorManagement',
+        layout: eLayoutType.application,
+        requiredPolicy: 'Healthcare.Patients',
       }
     ]);
   };

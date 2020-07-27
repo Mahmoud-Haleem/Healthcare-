@@ -10,6 +10,7 @@ namespace ERP.Healthcare.Patients
         public string Name { get; private set; }
         public DateTime BirthDate { get; set; }
         public string ShortDescription { get; set; }
+        public int DoctorId { get; set; }
 
         private Patient()
         {

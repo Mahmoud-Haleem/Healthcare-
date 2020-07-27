@@ -6,6 +6,7 @@
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     "Menu:DoctorManagement": "Doctor Management",
     "Menu:Doctor": "Doctor",
+    "Menu:Patient": "Patient",
     "Actions": "Actions",
     "NewDoctor": "New doctor",
     "Delete": "Delete",
@@ -32,11 +33,16 @@
     "Permission:Doctors.Create": "Creating new doctors",
     "Permission:Doctors.Edit": "Editing the doctors",
     "Permission:Doctors.Delete": "Deleting the doctors",
-    "BookStore:00001": "There is already an author with the same name: {name}",
+    "Healthcare:00001": "There is already an patient with the same name: {name}",
     "Permission:Patients": "Patient Management",
     "Permission:Patients.Create": "Creating new patients",
     "Permission:Patients.Edit": "Editing the patients",
-    "Permission:Patients.Delete": "Deleting the patients"
+    "Permission:Patients.Delete": "Deleting the patients",
+    "Menu:Patients": "Patients",
+    "Patients": "Patients",
+    "PatientDeletionConfirmationMessage": "Are you sure to delete the patient '{0}'?",
+    "BirthDate": "Birth date",
+    "NewPatient": "New patient"
 
   }
 }

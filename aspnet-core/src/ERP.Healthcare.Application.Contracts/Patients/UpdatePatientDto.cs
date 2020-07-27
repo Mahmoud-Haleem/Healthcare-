@@ -15,5 +15,9 @@ namespace ERP.Healthcare.Patients
         [Required]
         [StringLength(PatientConsts.MaxShortDescriptionLength)]
         public string ShortDescription { get; set; }
+
+        [Required]
+        public int DoctorId { get; set; }
+
     }
 }
