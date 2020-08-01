@@ -5,6 +5,7 @@ using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.IdentityServer;
 using Volo.Abp.Localization;
+using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
@@ -46,6 +47,11 @@ namespace ERP.Healthcare
                     .AddVirtualJson("/Localization/Healthcare");
                 
                 options.DefaultResourceType = typeof(HealthcareResource);
+            });
+
+            Configure<AbpExceptionLocalizationOptions>(options =>
+            {
+                options.MapCodeNamespace("Healthcare", typeof(HealthcareResource));
             });
         }
     }

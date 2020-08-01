@@ -3,6 +3,7 @@ export class UpdatePatientDto  {
   name: string;
   birthDate: string;
   shortDescription: string;
+  doctorId: number;
 
   constructor(initialValues: Partial<UpdatePatientDto> = {}) {
     if (initialValues) {

@@ -1,7 +1,7 @@
-import { RestService , PagedResultDto} from '@abp/ng.core';
+import { RestService , ListResultDto, PagedResultDto} from '@abp/ng.core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {CreatePatientDto, PatientDto, GetPatientListDto, UpdatePatientDto} from '../models';
+import {CreatePatientDto, PatientDto, DoctorLookupDto, GetPatientListDto, UpdatePatientDto} from '../models';
 
 @Injectable({providedIn: 'root'})
 export class PatientService {
@@ -17,6 +17,9 @@ export class PatientService {
  }
  getById(id: number): Observable<PatientDto> {
    return this.restService.request({ url: `/api/app/patient/${id}`, method: 'GET' },{ apiName: this.apiName });
+ }
+ getDoctorLookup(): Observable<ListResultDto<DoctorLookupDto>> {
+   return this.restService.request({ url: '/api/app/patient/doctorLookup', method: 'GET' },{ apiName: this.apiName });
  }
  getListByInput(params = {} as GetPatientListDto): Observable<PagedResultDto<PatientDto>> {
    return this.restService.request({ url: '/api/app/patient', method: 'GET', params },{ apiName: this.apiName });

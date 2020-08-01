@@ -58,6 +58,7 @@ export class PatientComponent implements OnInit {
         this.selectedPatient.birthDate ? new Date(this.selectedPatient.birthDate) : null,
         Validators.required,
       ],
+      doctorId: [1]
     });
   }
 

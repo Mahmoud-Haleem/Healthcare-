@@ -56,6 +56,7 @@ namespace ERP.Healthcare
 
             await _patientRepository.InsertAsync(
                 await _patientManager.CreateAsync(
+                    1,
                   "George Orwell",
                   DateTime.Now,
                   "Orwell produced literary criticism and poetry, "
@@ -64,6 +65,7 @@ namespace ERP.Healthcare
 
             await _patientRepository.InsertAsync(
                 await _patientManager.CreateAsync(
+                    1,
                    "Douglas Adams",
                     new DateTime(1952, 03, 11),
                     "Douglas Adams was an English author, screenwriter"

@@ -18,6 +18,7 @@ namespace ERP.Healthcare.Patients
         }
 
         internal Patient(
+            [NotNull] int doctorId,
             [NotNull] string name,
             DateTime birthDate,
             [CanBeNull] string shortDescription = null)
@@ -26,6 +27,7 @@ namespace ERP.Healthcare.Patients
             SetName(name);
             BirthDate = birthDate;
             ShortDescription = shortDescription;
+            DoctorId = doctorId;
         }
 
         internal Patient ChangeName([NotNull] string name)

@@ -1,11 +1,8 @@
 
-export class CreatePatientDto  {
-  name: string;
-  birthDate: string;
-  shortDescription: string;
-  doctorId: number;
+export class DoctorLookupDto  {
+  items: any[];
 
-  constructor(initialValues: Partial<CreatePatientDto> = {}) {
+  constructor(initialValues: Partial<DoctorLookupDto> = {}) {
     if (initialValues) {
       for (const key in initialValues) {
         if (initialValues.hasOwnProperty(key)) {

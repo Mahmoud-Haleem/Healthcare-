@@ -33,7 +33,7 @@ namespace ERP.Healthcare
         [Authorize(HealthcarePermissions.Patients.Create)]
         public async Task<PatientDto> CreateAsync(CreatePatientDto input)
         {
-            var patient = await _patientManager.CreateAsync(input.Name, input.BirthDate, input.ShortDescription);
+            var patient = await _patientManager.CreateAsync(input.DoctorId, input.Name, input.BirthDate, input.ShortDescription);
 
             await _patientRepository.InsertAsync(patient);
 

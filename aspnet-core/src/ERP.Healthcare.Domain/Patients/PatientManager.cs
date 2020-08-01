@@ -16,6 +16,7 @@ namespace ERP.Healthcare.Patients
         }
 
         public async Task<Patient> CreateAsync(
+            [NotNull] int doctorId,
             [NotNull] string name,
             DateTime birthDate,
             [CanBeNull] string shortBio = null)
@@ -29,6 +30,7 @@ namespace ERP.Healthcare.Patients
             }
 
             return new Patient(
+                doctorId,
                 name,
                 birthDate,
                 shortBio
